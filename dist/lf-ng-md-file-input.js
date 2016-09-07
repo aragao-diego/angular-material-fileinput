@@ -185,7 +185,7 @@
             restrict: 'E',
             template:  ['<div layout="column" class="lf-ng-md-file-input" ng-model="'+genLfObjId()+'">',
             '<div layout="column" class="lf-ng-md-file-input-preview-container" ng-class="{\'disabled\':isDisabled}" ng-show="isDrag || (isPreview && !isFilesNull)">',
-            '<md-button aria-label="remove all files" class="close lf-ng-md-file-input-x" ng-click="removeAllFiles($event)" ng-hide="isFilesNull || !isPreview" >&times;</md-button>',
+            '<md-button aria-label="remove all files" class="close lf-ng-md-file-input-x" ng-click="removeAllFiles($event)" ng-hide="isFilesNull || !isPreview || !minimalist" >&times;</md-button>',
             '<div class="lf-ng-md-file-input-drag">',
             '<div layout="row" layout-align="center center" class="lf-ng-md-file-input-drag-text-container" ng-show="(isFilesNull || !isPreview) && isDrag">',
             '<div class="lf-ng-md-file-input-drag-text">{{strCaptionDragAndDrop}}</div>',
@@ -250,6 +250,7 @@
                 scope.isMutiple = false;
                 scope.isProgress = false;
 
+
                 if(angular.isDefined(attrs.preview)){
                     scope.isPreview = true;
                 }
@@ -268,6 +269,8 @@
                 if(angular.isDefined(attrs.progress)){
                     scope.isProgress = true;
                 }
+
+                scope.minimalist = !angular.isDefined(attrs.minimalist);
 
                 scope.isDisabled = false;
 
@@ -624,13 +627,17 @@
 
                         var elFooter = angular.element('<div class="lf-ng-md-file-input-frame-footer"><div class="lf-ng-md-file-input-frame-caption">'+lfFile.name+'</div></div>');
 
-                        elFrame.append(elFrameX);
+                        if(scope.minimalist){
+                            elFrame.append(elFrameX);
+                        }
                         // if(scope.isPreview) {
                         elFrame.append(elPreview);
                         // }else{
                         //     console.log('no preview');
                         // }
-                        elFrame.append(elFooter);
+                        if(scope.minimalist){
+                            elFrame.append(elFooter);
+                        }
 
                         $compile(elFrame)(scope);
 
