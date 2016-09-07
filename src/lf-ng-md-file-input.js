@@ -301,7 +301,7 @@
 
                 scope.accept = scope.accept || '';
 
-                scope.lfFiles = [];
+                scope.lfFiles = attrs.lfFiles || [];
 
                 scope[attrs.ngModel] = scope.lfFiles;
 
@@ -317,6 +317,43 @@
 
                     self.removeByName = function(name){
                         scope.removeFileByName(name);
+                    };
+
+                    self.readBase64Image = function(base64String){
+                        function b64toBlob(b64Data, contentType, sliceSize) {
+                		  contentType = contentType || '';
+                		  sliceSize = sliceSize || 512;
+
+                		  var byteCharacters = atob(b64Data);
+                		  var byteArrays = [];
+
+                		  for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                			var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+                			var byteNumbers = new Array(slice.length);
+                			for (var i = 0; i < slice.length; i++) {
+                			  byteNumbers[i] = slice.charCodeAt(i);
+                			}
+
+                			var byteArray = new Uint8Array(byteNumbers);
+
+                			byteArrays.push(byteArray);
+                		  }
+
+                		  var blob = new Blob(byteArrays, {type: contentType});
+                		  return blob;
+                		}
+
+
+                		var contentType = 'image/png';
+                		var b64Data = 'iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
+
+                		var blob = b64toBlob(b64Data, contentType);
+                		var blobUrl = URL.createObjectURL(blob);
+
+                		var img = document.createElement('img');
+                		img.src = blobUrl;
+                		document.body.appendChild(img);
                     };
                 };
 

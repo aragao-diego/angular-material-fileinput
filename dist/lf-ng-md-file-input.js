@@ -301,7 +301,7 @@
 
                 scope.accept = scope.accept || '';
 
-                scope.lfFiles = [];
+                scope.lfFiles = attrs.lfFiles || [];
 
                 scope[attrs.ngModel] = scope.lfFiles;
 
