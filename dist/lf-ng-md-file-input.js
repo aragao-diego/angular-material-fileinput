@@ -324,7 +324,7 @@
 
                     //'image/png'
                     //'iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='
-                    self.addBase64Image = function(base64String){
+                    self.addBase64Image = function(base64String, contentType){
                         function b64toBlob(b64Data, contentType, sliceSize) {
                             contentType = contentType || '';
                             sliceSize = sliceSize || 512;
@@ -349,8 +349,6 @@
                             return blob;
                         }
 
-
-                        var contentType = 'image/png';
                         var b64Data = base64String;
 
                         var blob = b64toBlob(b64Data, contentType);
