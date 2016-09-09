@@ -195,7 +195,7 @@
             '<div class="clearfix" style="clear:both"></div>',
             '</div>',
             '</div>',
-            '<div layout="row" class="lf-ng-md-file-input-container" >',
+            '<div layout="row" class="lf-ng-md-file-input-container" ng-hide="showOnlyPreview">',
             '<div class="lf-ng-md-file-input-caption" layout="row" layout-align="start center" flex ng-class="{\'disabled\':isDisabled}" >',
             '<md-icon class="lf-icon" ng-class="strCaptionIconCls"></md-icon>',
             '<div flex class="lf-ng-md-file-input-caption-text-default" ng-show="isFilesNull">',
@@ -231,7 +231,8 @@
                 lfRemoveLabel: '@?',
                 lfOnFileClick: '=?',
                 accept:'@?',
-                ngDisabled:'=?'
+                ngDisabled:'=?',
+                showOnlyPreview:'=?'
             },
             link: function(scope,element,attrs,ctrl){
 
@@ -271,6 +272,11 @@
                 }
 
                 scope.minimalist = !angular.isDefined(attrs.minimalist);
+                if( angular.isDefined(attrs.showOnlyPreview)){
+                    scope.$watch('showOnlyPreview', function(showOnlyPreview){
+                        scope.showOnlyPreview = showOnlyPreview;
+                    });
+                }
 
                 scope.isDisabled = false;
 
